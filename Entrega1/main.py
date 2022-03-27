@@ -21,7 +21,7 @@ image_path = os.path.join(resource_path, 'Assets')  # The image folder path
 battleship_IMGS = pygame.transform.scale2x(
     pygame.image.load(os.path.join(image_path, 'cruiser.png')))
 BG = pygame.transform.scale(pygame.image.load(os.path.join(
-    image_path, "bg_1.jpg")), (win_width, win_heigh))
+    image_path, "bg_3.jpg")), (win_width, win_heigh))
 
 WIN = pygame.display.set_mode((win_width, win_heigh))
 
