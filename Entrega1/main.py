@@ -7,6 +7,8 @@ from pygame.locals import *
 import math
 import random
 
+from board import battleship, shot
+
 
 win_width = 850
 win_heigh = 720
@@ -56,11 +58,11 @@ def draw_win(win, boat):
 
 
 def game_loop():
-    boat1 = boat.Boat(100, 100, 1, "Submarine")
+    #boat1 = boat.Boat(100, 100, 1, "Submarine")
 
     running = True
     while running:
-        draw_win(WIN, boat1)
+        #draw_win(WIN, boat1)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
