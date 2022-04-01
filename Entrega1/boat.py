@@ -5,13 +5,11 @@ class Boat:
     # Submarine size onboard is 1
     # DestructorBoat size onboard is 2
     # Cruiser size onboard is 3
-    # aircraftCarrier size onboard is 4
-
-    _boat_type = {"Submarine": 1,"DestructorBoat": 2, "Cruiser": 3, "aircraftCarrier": 4}
+    # AircraftCarrier size onboard is 4
 
     def __init__(self, name : str, size : int, id : int):
         self._name = name
-        self._size = size if self._boat_type[name] == size else self._boat_type[name]
+        self._size = size
         self._id = id
         self._destroyed = False
         self._damage = 0
@@ -50,6 +48,7 @@ class Boat:
     def containsPoint(self, p):
         return p in self._points_destroyed
 
+    # Ubicar un punto en el tablero
     def locate(self, board, counter, x, y, location=""):
         if counter == self._size:
             return True
