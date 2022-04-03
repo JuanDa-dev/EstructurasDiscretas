@@ -60,6 +60,10 @@ pygame.display.set_caption("BattleShip")
 pygame.display.set_icon(ICON)
 
 
+def getData(dat1, dat2, dat3, dat4):
+    return dat1, dat2, dat3, dat4
+
+
 def draw_win(win, boat):
 
     win.blit(BG, (0, 0))
@@ -77,7 +81,6 @@ def main_menu():
         WIN.blit(BG_MAIN_MENU, (0, 0))
 
         mx, my = pygame.mouse.get_pos()
-        print(mx, my)
 
         Button_play = WIN.blit(
             BUTTON_PLAY, (WIDTH/2 - 200, 500))
