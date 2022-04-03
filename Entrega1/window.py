@@ -2,7 +2,13 @@ from tkinter import *
 import sys
 import os
 
+
+#from main import getData
+
 from numpy import var
+
+
+sw = 0
 
 
 def btn_clicked():
@@ -11,11 +17,24 @@ def btn_clicked():
     d1 = data1.get()
     d2 = data2.get()
     d3 = data3.get()
+    sw = 1
 
     print(d)
     print(d1)
     print(d2)
     print(d3)
+
+
+def setD():
+
+    d = data.get()
+    d1 = data1.get()
+    d2 = data2.get()
+    d3 = data3.get()
+
+    print("Paso por aqui")
+
+    return d, d1, d2, d3
 
 
 window = Tk()
@@ -152,5 +171,10 @@ b0.place(
     height=28)
 
 
-window.resizable(False, False)
-window.mainloop()
+'''window.resizable(False, False)
+window.mainloop()'''
+
+
+def display_window():
+    window.resizable(False, False)
+    window.mainloop()
