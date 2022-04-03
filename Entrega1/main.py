@@ -9,6 +9,7 @@ from pygame.locals import *
 import math
 import random
 from board import Board
+import window as win_
 
 # Resource paths
 
@@ -60,10 +61,6 @@ pygame.display.set_caption("BattleShip")
 pygame.display.set_icon(ICON)
 
 
-def getData(dat1, dat2, dat3, dat4):
-    return dat1, dat2, dat3, dat4
-
-
 def draw_win(win, boat):
 
     win.blit(BG, (0, 0))
@@ -107,6 +104,12 @@ def game_loop():
     clock = pygame.time.Clock()
 
     board = Board()
+
+    win_.display_window()
+    sw = 1
+    sub, dest, cru, port = win_.setD()
+
+    print("data: ", sub, dest, cru, port)
 
     '''def redraw_window():
         WIN.blit(BG, (0, 0))
