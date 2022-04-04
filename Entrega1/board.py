@@ -25,6 +25,7 @@ class Board:
         self.boats = []
         self.boat_type = {"submarines": 1, "destructorBoat": 2,
                           "cruises": 3, "aircraftCarrier": 4}
+        self.shots = [[0 for j in range(n)] for i in range(n)]
 
     def draw_board(self, win):
         win.fill(BLUE)
@@ -145,3 +146,138 @@ class Board:
             self.boats.append(Boat(name, m, 10 * m + i + 1))
 
         return self.boats
+
+    def addShots(self, x, y):
+
+        self.shots[x][y] = 1
+        return self.shots
+
+    def determinate_quadrant(self, x, y):
+        if x >= 0 and x <= 100 and y >= 0 and y <= 100:
+            return 0, 0
+        elif x >= 100 and x <= 200 and y >= 0 and y <= 100:
+            return 0, 1
+        elif x >= 200 and x <= 300 and y >= 0 and y <= 100:
+            return 0, 2
+        elif x >= 300 and x <= 400 and y >= 0 and y <= 100:
+            return 0, 3
+        elif x >= 400 and x <= 500 and y >= 0 and y <= 100:
+            return 0, 4
+        elif x >= 500 and x <= 600 and y >= 0 and y <= 100:
+            return 0, 5
+        elif x >= 600 and x <= 700 and y >= 0 and y <= 100:
+            return 0, 6
+        elif x >= 700 and x <= 800 and y >= 0 and y <= 100:
+            return 0, 7
+        elif x >= 0 and x <= 100 and y >= 100 and y <= 200:
+            return 1, 0
+        elif x >= 100 and x <= 200 and y >= 100 and y <= 200:
+            return 1, 1
+        elif x >= 200 and x <= 300 and y >= 100 and y <= 200:
+            return 1, 2
+        elif x >= 300 and x <= 400 and y >= 100 and y <= 200:
+            return 1, 3
+        elif x >= 400 and x <= 500 and y >= 100 and y <= 200:
+            return 1, 4
+        elif x >= 500 and x <= 600 and y >= 100 and y <= 200:
+            return 1, 5
+        elif x >= 600 and x <= 700 and y >= 100 and y <= 200:
+            return 1, 6
+        elif x >= 700 and x <= 800 and y >= 100 and y <= 200:
+            return 1, 7
+        elif x >= 0 and x <= 100 and y >= 200 and y <= 300:
+            return 2, 0
+        elif x >= 100 and x <= 200 and y >= 200 and y <= 300:
+            return 2, 1
+        elif x >= 200 and x <= 300 and y >= 200 and y <= 300:
+            return 2, 2
+        elif x >= 300 and x <= 400 and y >= 200 and y <= 300:
+            return 2, 3
+        elif x >= 400 and x <= 500 and y >= 200 and y <= 300:
+            return 2, 4
+        elif x >= 500 and x <= 600 and y >= 200 and y <= 300:
+            return 2, 5
+        elif x >= 600 and x <= 700 and y >= 200 and y <= 300:
+            return 2, 6
+        elif x >= 700 and x <= 800 and y >= 200 and y <= 300:
+            return 2, 7
+        elif x >= 0 and x <= 100 and y >= 300 and y <= 400:
+            return 3, 0
+        elif x >= 100 and x <= 200 and y >= 300 and y <= 400:
+            return 3, 1
+        elif x >= 200 and x <= 300 and y >= 300 and y <= 400:
+            return 3, 2
+        elif x >= 300 and x <= 400 and y >= 300 and y <= 400:
+            return 3, 3
+        elif x >= 400 and x <= 500 and y >= 300 and y <= 400:
+            return 3, 4
+        elif x >= 500 and x <= 600 and y >= 300 and y <= 400:
+            return 3, 5
+        elif x >= 600 and x <= 700 and y >= 300 and y <= 400:
+            return 3, 6
+        elif x >= 700 and x <= 800 and y >= 300 and y <= 400:
+            return 3, 7
+        elif x >= 0 and x <= 100 and y >= 400 and y <= 500:
+            return 4, 0
+        elif x >= 100 and x <= 200 and y >= 400 and y <= 500:
+            return 4, 1
+        elif x >= 200 and x <= 300 and y >= 400 and y <= 500:
+            return 4, 2
+        elif x >= 300 and x <= 400 and y >= 400 and y <= 500:
+            return 4, 3
+        elif x >= 400 and x <= 500 and y >= 400 and y <= 500:
+            return 4, 4
+        elif x >= 500 and x <= 600 and y >= 400 and y <= 500:
+            return 4, 5
+        elif x >= 600 and x <= 700 and y >= 400 and y <= 500:
+            return 4, 6
+        elif x >= 700 and x <= 800 and y >= 400 and y <= 500:
+            return 4, 7
+        elif x >= 0 and x <= 100 and y >= 500 and y <= 600:
+            return 5, 0
+        elif x >= 100 and x <= 200 and y >= 500 and y <= 600:
+            return 5, 1
+        elif x >= 200 and x <= 300 and y >= 500 and y <= 600:
+            return 5, 2
+        elif x >= 300 and x <= 400 and y >= 500 and y <= 600:
+            return 5, 3
+        elif x >= 400 and x <= 500 and y >= 500 and y <= 600:
+            return 5, 4
+        elif x >= 500 and x <= 600 and y >= 500 and y <= 600:
+            return 5, 5
+        elif x >= 600 and x <= 700 and y >= 500 and y <= 600:
+            return 5, 6
+        elif x >= 700 and x <= 800 and y >= 500 and y <= 600:
+            return 5, 7
+        elif x >= 0 and x <= 100 and y >= 600 and y <= 700:
+            return 6, 0
+        elif x >= 100 and x <= 200 and y >= 600 and y <= 700:
+            return 6, 1
+        elif x >= 200 and x <= 300 and y >= 600 and y <= 700:
+            return 6, 2
+        elif x >= 300 and x <= 400 and y >= 600 and y <= 700:
+            return 6, 3
+        elif x >= 400 and x <= 500 and y >= 600 and y <= 700:
+            return 6, 4
+        elif x >= 500 and x <= 600 and y >= 600 and y <= 700:
+            return 6, 5
+        elif x >= 600 and x <= 700 and y >= 600 and y <= 700:
+            return 6, 6
+        elif x >= 700 and x <= 800 and y >= 600 and y <= 700:
+            return 6, 7
+        elif x >= 0 and x <= 100 and y >= 700 and y <= 800:
+            return 7, 0
+        elif x >= 100 and x <= 200 and y >= 700 and y <= 800:
+            return 7, 1
+        elif x >= 200 and x <= 300 and y >= 700 and y <= 800:
+            return 7, 2
+        elif x >= 300 and x <= 400 and y >= 700 and y <= 800:
+            return 7, 3
+        elif x >= 400 and x <= 500 and y >= 700 and y <= 800:
+            return 7, 4
+        elif x >= 500 and x <= 600 and y >= 700 and y <= 800:
+            return 7, 5
+        elif x >= 600 and x <= 700 and y >= 700 and y <= 800:
+            return 7, 6
+        elif x >= 700 and x <= 800 and y >= 700 and y <= 800:
+            return 7, 7

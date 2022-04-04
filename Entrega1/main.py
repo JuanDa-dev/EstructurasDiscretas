@@ -10,6 +10,7 @@ import math
 import random
 from board import Board
 import window as win_
+from shots_window import Shot
 
 # Resource paths
 
@@ -61,6 +62,12 @@ pygame.display.set_caption("BattleShip")
 pygame.display.set_icon(ICON)
 
 
+def calc_pos(x, y):
+    px = SQUARE_SIZE * x + SQUARE_SIZE // 2
+    py = SQUARE_SIZE * y + SQUARE_SIZE // 2
+    return px, py
+
+
 def draw_win(win, boat):
 
     win.blit(BG, (0, 0))
@@ -105,6 +112,8 @@ def game_loop():
 
     board = Board()
 
+    shot_w = Shot()
+
     win_.display_window()
     sw = 1
     sub, dest, cru, port = win_.setD()
@@ -118,14 +127,34 @@ def game_loop():
     while running:
         #draw_win(WIN, boat1)
         # redraw_window()
-
+        mx, my = pygame.mouse.get_pos()
+        print(mx, my)
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()  # quit the screen
                 running = False
                 sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                x, y = board.determinate_quadrant(mx, my)
+                Px, Py = calc_pos(x, y)
+
+                shots = board.addShots(x, y)
+                print(shots)
+
+        # shot_win.display_window()
+
         board.draw_board(WIN)
+
+        # draw the panel in white when we click
+        radius = SQUARE_SIZE//2 - 15
+        for i in range(ROWS):
+            for j in range(COL):
+                if board.shots[i][j] == 1:
+
+                    pygame.draw.circle(
+                        WIN, WHITE, (SQUARE_SIZE * j + SQUARE_SIZE // 2, SQUARE_SIZE * i + SQUARE_SIZE // 2), radius + 2)
+
         pygame.display.update()
 
     # pygame.quit()

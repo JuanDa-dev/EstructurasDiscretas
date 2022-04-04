@@ -1,92 +1,35 @@
-from tkinter import *
+import pygame
+import sys
+import os
+from pygame import mixer
+from pygame.locals import *
+import math
+import random
 
 
-def btn_clicked():
-    print("Button Clicked")
+WIDTH = 800
+HEIGH = 800
+FPS = 60
 
 
-window = Tk()
+ROWS, COL = 8, 8
+SQUARE_SIZE = WIDTH//COL
 
-window.geometry("285x303")
-window.configure(bg="#799cf4")
-canvas = Canvas(
-    window,
-    bg="#799cf4",
-    height=303,
-    width=285,
-    bd=0,
-    highlightthickness=0,
-    relief="ridge")
-background_img = PhotoImage(file="Entrega1/Assets/background_.png")
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+BLUE = (0, 0, 255)
+DARK_BLUE = (0, 0, 139)
 
 
-data = IntVar()
+class Shot:
+    PADDING = 15
+    OUTLINE = 2
 
+    def __init__(self):
 
-canvas.pack(expand=True, fill=BOTH)
+        self.color = WHITE
 
-canvas.create_image(0, 0, image=background_img, anchor="nw")
-
-canvas.create_text(
-    145, 55,
-    text="Coordinates X,Y",
-    fill="#ffffff",
-    font=("IM_FELL_French_Canon_SC", int(14.0)))
-
-canvas.create_text(
-    145, 90,
-    text="Write the coordinates of the shot",
-    fill="#ffffff",
-    font=("IM_FELL_French_Canon_SC", int(14.0)))
-
-canvas.create_text(
-    145, 120,
-    text="Example :  4 5 ",  # (The coordinates need a space between then)
-    fill="#ffffff",
-    font=("IM_FELL_French_Canon_SC", int(16.0)))
-
-
-entry0_img = PhotoImage(file=f"Entrega1/Assets/img_textBox0.png")
-entry0_bg = canvas.create_image(
-    145, 150,
-    image=entry0_img)
-
-entry0 = Entry(
-    bd=0,
-    bg="#ffffff",
-    highlightthickness=0)
-
-entry0.place(
-    x=50, y=140,
-    width=195.0,
-    height=23)
-
-
-img0 = PhotoImage(file=f"Entrega1/Assets/img0_.png")
-b0 = Button(
-    image=img0,
-    borderwidth=0,
-    bg="#799cf4",
-    highlightthickness=0,
-    command=btn_clicked,
-    relief="flat",
-    activebackground="#799cf4")
-
-b0.place(
-    x=92, y=200,
-    width=98,
-    height=28)
-
-
-'''
-
-
-
-
-
-
-
-'''
-
-window.resizable(False, False)
-window.mainloop()
+    def draw(self, win, x, y):
+        radius = SQUARE_SIZE//2 - self.PADDING
+        pygame.draw.circle(win, WHITE, (x, y), radius + self.OUTLINE)
+        pygame.draw.circle(win, self.color, (x, y), radius)
