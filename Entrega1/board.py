@@ -138,9 +138,9 @@ class Board:
     # name = nombre del barco
     # n = numero de barcos de ese tipo
 
-    def addBoats(self, name, n):
+    def addBoats(self, name, n, m):
         self.boats = []
-        m = self.boat_type[name]
+        #m = self.boat_type[name]
 
         for i in range(n):
             self.boats.append(Boat(name, m, 10 * m + i + 1))

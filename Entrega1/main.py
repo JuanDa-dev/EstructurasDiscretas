@@ -10,7 +10,7 @@ import math
 import random
 from board import Board
 import window as win_
-from shots_window import Shot
+
 
 # Resource paths
 
@@ -29,13 +29,14 @@ HEIGH = 800
 FPS = 60
 
 
-ROWS, COL = 8, 8
+ROWS, COL, n = 8, 8, 8
 SQUARE_SIZE = WIDTH//COL
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 BLUE = (0, 0, 255)
 DARK_BLUE = (0, 0, 139)
+CYAN = (0, 255, 255)
 
 # prepare the resources
 BATTLESHIP_IMGS = pygame.transform.scale2x(
@@ -106,29 +107,41 @@ def main_menu():
 def game_loop():
     #boat1 = boat.Boat(100, 100, 1, "Submarine")
 
+    board_2 = []
+    boats = []
+    boat_type = {"submarinos": 1, "destructores": 2,
+                 "cruceros": 3, "portaaviones": 4}
     running = True
 
     clock = pygame.time.Clock()
 
     board = Board()
 
-    shot_w = Shot()
-
     win_.display_window()
     sw = 1
     sub, dest, cru, port = win_.setD()
 
-    print("data: ", sub, dest, cru, port)
+    boats += board.addBoats(boat_type["submarinos"], sub, 1)
+    boats += board.addBoats(boat_type["submarinos"], dest, 2)
+    boats += board.addBoats(boat_type["cruceros"], cru, 3)
+    boats += board.addBoats(boat_type["portaaviones"], port, 4)
+    board_ = None
+    board_ = board.battleship(boats, n)
+
+    for i in range(len(board_)):
+        board_2.append([])
+        for j in range(len(board_)):
+            board_2[i].append(board_[i][j])
 
     '''def redraw_window():
         WIN.blit(BG, (0, 0))
         #boat1.draw(WIN, battleship_IMGS)
         pygame.display.update()'''
-    while running:
+    while not board.isEnd(boats):
         #draw_win(WIN, boat1)
         # redraw_window()
         mx, my = pygame.mouse.get_pos()
-        print(mx, my)
+
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -139,14 +152,15 @@ def game_loop():
                 x, y = board.determinate_quadrant(mx, my)
                 Px, Py = calc_pos(x, y)
 
+                if (0 <= x < len(board_)) and (0 <= y < len(board_)):
+                    board.shot(board_, boats, x, y)
+
                 shots = board.addShots(x, y)
-                print(shots)
 
         # shot_win.display_window()
 
-        board.draw_board(WIN)
-
         # draw the panel in white when we click
+        board.draw_board(WIN)
         radius = SQUARE_SIZE//2 - 15
         for i in range(ROWS):
             for j in range(COL):
@@ -157,8 +171,25 @@ def game_loop():
 
         pygame.display.update()
 
+    while running:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                running = False
+                sys.exit()
+        board.draw_board(WIN)
+        radius = SQUARE_SIZE//2 - 15
+
+        for i in range(ROWS):
+            for j in range(COL):
+                if board_2[i][j] != 0:
+
+                    pygame.draw.circle(
+                        WIN, CYAN, (SQUARE_SIZE * j + SQUARE_SIZE // 2, SQUARE_SIZE * i + SQUARE_SIZE // 2), radius + 2)
+        pygame.display.update()
+
+
     # pygame.quit()
-
-
 # game_loop()
 main_menu()
