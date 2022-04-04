@@ -12,17 +12,12 @@ sw = 0
 
 
 def btn_clicked():
-    print("Button Clicked")
+
     d = data.get()
     d1 = data1.get()
     d2 = data2.get()
     d3 = data3.get()
     sw = 1
-
-    print(d)
-    print(d1)
-    print(d2)
-    print(d3)
 
 
 def setD():
