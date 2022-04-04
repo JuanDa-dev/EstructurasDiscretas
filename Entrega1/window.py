@@ -32,8 +32,6 @@ def setD():
     d2 = data2.get()
     d3 = data3.get()
 
-    print("Paso por aqui")
-
     return d, d1, d2, d3
 
 
