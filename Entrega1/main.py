@@ -1,5 +1,6 @@
 #from board import battleship, shot
-from tkinter import Button
+from tkinter import *
+from tkinter import messagebox
 import boat
 import pygame
 import sys
@@ -170,7 +171,8 @@ def game_loop():
                         WIN, WHITE, (SQUARE_SIZE * j + SQUARE_SIZE // 2, SQUARE_SIZE * i + SQUARE_SIZE // 2), radius + 2)
 
         pygame.display.update()
-
+    Tk().wm_withdraw()  # to hide the main window
+    messagebox.showinfo('You Win', 'OK')
     while running:
 
         for event in pygame.event.get():

@@ -7,6 +7,10 @@ import os
 
 from numpy import var
 
+current_path = os.path.dirname(__file__)  # Where your .py file is located
+resource_path = os.path.join(current_path, '')  # The resource folder path
+image_path = os.path.join(resource_path, 'Assets')  # The image folder path
+
 
 sw = 0
 
@@ -41,9 +45,10 @@ canvas = Canvas(
     width=285,
     bd=0,
     highlightthickness=0,
-    relief="ridge")
+    relief="ridge")  # "Entrega1/Assets/background.png"
 
-background_img = PhotoImage(file="Entrega1/Assets/background.png")
+# os.path.join(image_path, 'background.png')
+background_img = PhotoImage(file=os.path.join(image_path, 'background.png'))
 '''label = Label(
     window,
     image=background_img
@@ -65,7 +70,9 @@ canvas.create_text(145, 55,
                    fill="#ffffff",
                    font=("IM_FELL_French_Canon_SC", int(14.0)))
 
-entry0_img = PhotoImage(file=f"Entrega1/Assets/img_textBox0.png")
+# os.path.join(image_path, 'img_textBox0.png')
+# "Entrega1/Assets/img_textBox0.png
+entry0_img = PhotoImage(file=os.path.join(image_path, 'img_textBox0.png'))
 entry0_bg = canvas.create_image(
     145, 80,
     image=entry0_img)
@@ -131,7 +138,7 @@ canvas.create_text(
     fill="#ffffff",
     font=("IM_FELL_French_Canon_SC", int(14.0)))
 
-entry3_img = PhotoImage(file=f"Entrega1/Assets/img_textBox3.png")
+entry3_img = PhotoImage(file=os.path.join(image_path, 'img_textBox0.png'))
 entry3_bg = canvas.create_image(
     145, 265,
     image=entry3_img)
@@ -147,7 +154,7 @@ entry3.place(
     width=195.0,
     height=23)
 
-img0 = PhotoImage(file=f"Entrega1/Assets/img0.png")
+img0 = PhotoImage(file=os.path.join(image_path, 'img0.png'))
 b0 = Button(
     image=img0,
     borderwidth=0,
