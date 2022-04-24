@@ -1,5 +1,6 @@
 # Here we are going to work in the web scrapper and the NPL data
 
+from asyncore import file_dispatcher
 from nltk.tokenize import word_tokenize
 from regex import P
 from sympy import N
@@ -15,6 +16,7 @@ from os import path
 from PIL import Image
 import random
 nltk.download('punkt')
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 
 
 # Se obtiene la lista de stopwords mediante la libreria nltk
@@ -72,9 +74,12 @@ df = pd.DataFrame(dict)
 df.to_csv('GFG.csv', index=False, encoding='utf-8-sig', header=True, sep=',')
 
 
-def plot(a, b):
+
+
+
+def plot(a, b ,size):
     ptl.bar(a, b)
-    ptl.xticks(rotation=90)
+    ptl.xticks(rotation=90, fontsize=size)
     ptl.show()
 
 
@@ -96,7 +101,8 @@ def clean_text(text):
             #tempW = array_clean[i].split()
             tempW = array_clean[i]
             for j in range(len(tempW)):
-                if tempW[j] not in stopW:
+                word = tempW[j].lower()
+                if word not in stopW:
                     tempW2.insert(j, tempW[j])
             clean.append(tempW2)
         else:
@@ -125,10 +131,18 @@ def distribution_Frequency(lits):
     return key_list, F, freq
 
 
-print(clean_text(title))
+#print(clean_text(title))
 arr = clean_text(title)
 arr2 = clean_text(summary)
 complete_arr = arr + arr2
+
+
+with open("file.txt", 'w', encoding='utf8') as file:
+    for row in complete_arr:
+        s = " ".join(map(str, row))
+        file.write(s+'\n')
+txt = open('file.txt', encoding='utf8').read()
+
 
 
 name, f, F = distribution_Frequency(arr)
@@ -136,7 +150,20 @@ name, f, F = distribution_Frequency(arr)
 '''ptl.bar(name, f)
 ptl.xticks(rotation=90)
 ptl.show()'''
-plot(name, f)
+
+
+print("\n")
+print("\n")
+print("Primer punto")
+print("\n")
+mid = len(name) // 2
+temp_name = name[mid:]
+temp_name2 = name[:mid]
+temp_data = f[mid:]
+temp_data2 = f[:mid]
+plot(temp_name, temp_data, 5)
+plot(temp_name2, temp_data2, 5)
+
 
 
 # 2
@@ -179,6 +206,29 @@ data, key_l, item_l = date_2(date, arr, arr2)
 print(data)
 
 
+#temp_data = list(data[key_l[0]])
+
+'''print(temp_data)
+print(temp_data[0])'''
+
+axix_x = []
+axix_y = []
+
+for i in range(len(key_l)):
+  temp_data_k = list(data[key_l[i]])
+  
+
+  axix_y.append(temp_data_k[1])
+
+  st = str(key_l[i]) + ": " +  temp_data_k[0]
+
+  axix_x.append(st)
+
+ptl.ylabel('Cantidad de palabras')
+ptl.xlabel('Fecha')
+ptl.title('Frecuencia de palabras por fecha')
+plot(axix_x, axix_y, 20)
+
 # 3
 
 
@@ -203,9 +253,29 @@ print(date_distribution(date))
 # 4
 # CloudWord
 
+def word_Cloud(txt):
+
+  wordcloud = WordCloud(width = 800, height = 800,
+                background_color ='white',
+                stopwords = STOPWORDS,
+                min_font_size = 10).generate(txt)
+ 
+  # plot the WordCloud image                      
+  ptl.figure(figsize = (8, 8), facecolor = None)
+  ptl.imshow(wordcloud)
+  ptl.axis("off")
+  ptl.tight_layout(pad = 0)
+ 
+  ptl.show()
+
+print("\n")
+print("\n")
+print("Cuarto punto")
+word_Cloud(txt)
 
 def obtenNGramas(listaPalabras, n):
     return [listaPalabras[i:i+n] for i in range(len(listaPalabras)-(n-1))]
+
 
 
 def lower(listaPalabras):
@@ -293,7 +363,8 @@ def trigramas(listaPalabras):
     for j in range(10):
         print(cont[j])
 
-
+print("\n")
+print("\n")
 print("Quinto punto\n")
 print("Los 10 bigramas mas frecuentes son:")
 bigramas(complete_arr)
@@ -306,42 +377,41 @@ trigramas(complete_arr)
 # 6
 
 
-with open("file.txt", 'w', encoding='utf8') as file:
-    for row in complete_arr:
-        s = " ".join(map(str, row))
-        file.write(s+'\n')
-txt = open('file.txt', encoding='utf8').read()
 
 
 def markov_chain(txt):
 
-    corpus = txt.split()
+    text_model = txt.split()
 
-    def make_pairs(corpus):
-        for i in range(len(corpus)-1):
-            yield (corpus[i], corpus[i+1])
+    def make_pairs(text_model):
+        for i in range(len(text_model)-1):
+            yield (text_model[i], text_model[i+1])
 
-    pairs = make_pairs(corpus)
+    words = make_pairs(text_model)
 
-    word_dict = {}
+    dict = {}
 
-    for word_1, word_2 in pairs:
-        if word_1 in word_dict.keys():
-            word_dict[word_1].append(word_2)
+    for word_1, word_2 in words:
+        if word_1 in dict.keys():
+            dict[word_1].append(word_2)
         else:
-            word_dict[word_1] = [word_2]
+            dict[word_1] = [word_2]
 
-    first_word = np.random.choice(corpus)
+    first_word = np.random.choice(text_model)
 
     while first_word.islower():
-        first_word = np.random.choice(corpus)
+        first_word = np.random.choice(text_model)
 
     chain = [first_word]
 
-    n_words = 50
+    n_words = 31
 
     for i in range(n_words):
-        chain.append(np.random.choice(word_dict[chain[-1]]))
+        a = dict[chain[-1]]
+        if a[0] == "Unido":
+            continue
+        else:
+            chain.append(np.random.choice(dict[chain[-1]]))
 
     text = ' '.join(chain)
 
