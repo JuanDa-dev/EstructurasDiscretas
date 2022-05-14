@@ -131,7 +131,6 @@ def distribution_Frequency(lits):
     return key_list, F, freq
 
 
-#print(clean_text(title))
 arr = clean_text(title)
 arr2 = clean_text(summary)
 complete_arr = arr + arr2
@@ -375,10 +374,6 @@ trigramas(complete_arr)
 
 
 # 6
-
-
-
-
 def markov_chain(txt):
 
     text_model = txt.split()
